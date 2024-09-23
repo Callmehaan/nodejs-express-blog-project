@@ -8,6 +8,7 @@ const Article = (sequelize) => {
                 type: DataTypes.INTEGER.UNSIGNED,
                 primaryKey: true,
                 autoIncrement: true,
+                allowNull: false,
             },
             title: {
                 type: DataTypes.STRING,

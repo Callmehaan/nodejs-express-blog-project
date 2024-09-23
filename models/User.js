@@ -8,6 +8,7 @@ const User = (sequelize) => {
                 type: DataTypes.INTEGER.UNSIGNED,
                 primaryKey: true,
                 autoIncrement: true,
+                allowNull: false,
             },
             name: {
                 type: DataTypes.STRING,
@@ -20,13 +21,14 @@ const User = (sequelize) => {
             username: {
                 type: DataTypes.STRING,
                 allowNull: false,
+                unique: true,
             },
             email: {
                 type: DataTypes.STRING,
                 allowNull: false,
                 unique: true,
             },
-            email: {
+            password: {
                 type: DataTypes.STRING,
                 allowNull: true,
             },
