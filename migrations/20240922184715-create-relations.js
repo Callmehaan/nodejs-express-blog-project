@@ -12,6 +12,7 @@ module.exports = {
                     model: "users",
                     key: "id",
                 },
+
                 onDelete: "CASCADE",
             });
 
@@ -38,7 +39,7 @@ module.exports = {
             });
 
             await queryInterface.addConstraint("tags_articles", {
-                fields: ["aericle_id", "tag_id"],
+                fields: ["article_id", "tag_id"],
                 type: "unique",
                 name: "unique_article_tag",
             });

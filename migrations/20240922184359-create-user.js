@@ -7,7 +7,7 @@ module.exports = {
                 allowNull: false,
                 autoIncrement: true,
                 primaryKey: true,
-                type: Sequelize.INTEGER,
+                type: Sequelize.INTEGER.UNSIGNED,
             },
             name: {
                 type: Sequelize.STRING,
@@ -32,13 +32,13 @@ module.exports = {
                 allowNull: true,
             },
             role: {
-                type: Sequelize.STRING,
+                type: Sequelize.ENUM,
                 values: ["user", "admin"],
                 allowNull: false,
                 default: "user",
             },
             provider: {
-                type: Sequelize.STRING,
+                type: Sequelize.ENUM,
                 values: ["local", "google"],
                 allowNull: false,
                 default: "local",
