@@ -1,5 +1,3 @@
-const { DataTypes } = require("sequelize");
-
 const TagArticle = (sequelize) =>
     sequelize.define(
         "tags_articles",
