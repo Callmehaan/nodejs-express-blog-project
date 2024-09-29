@@ -35,20 +35,20 @@ module.exports = {
                 type: Sequelize.ENUM,
                 values: ["user", "admin"],
                 allowNull: false,
-                default: "user",
+                defaultValue: "user",
             },
             provider: {
                 type: Sequelize.ENUM,
                 values: ["local", "google"],
                 allowNull: false,
-                default: "local",
+                defaultValue: "local",
             },
-            createdAt: {
+            created_at: {
                 type: Sequelize.DATE,
                 allowNull: false,
                 defaultValue: Sequelize.NOW,
             },
-            updatedAt: {
+            updated_at: {
                 type: Sequelize.DATE,
                 allowNull: false,
                 defaultValue: Sequelize.NOW,

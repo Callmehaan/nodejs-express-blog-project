@@ -41,4 +41,4 @@ Tag.belongsToMany(Article, {
     foreignKey: "tag_id",
 });
 
-module.exports = db;
+module.exports = { db, User, Article, Tag, TagArticle };

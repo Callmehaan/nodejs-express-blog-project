@@ -36,13 +36,13 @@ const User = (sequelize) => {
                 type: DataTypes.STRING,
                 values: ["user", "admin"],
                 allowNull: false,
-                default: "user",
+                defaultValue: "user",
             },
             provider: {
                 type: DataTypes.STRING,
                 values: ["local", "google"],
                 allowNull: false,
-                default: "local",
+                defaultValue: "local",
             },
         },
         {

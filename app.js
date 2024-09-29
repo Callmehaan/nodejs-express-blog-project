@@ -18,10 +18,10 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static(path.resolve(__dirname, "public")));
 
-app.use(localStrartegy);
+// app.use(localStrartegy);
 
-app.get("/captcha", captchaController.get);
-// app.get("/auth", authRoutes);
-// app.get("/articles", articlesRoutes);
+app.use("/captcha", captchaController.get);
+app.use("/auth", authRoutes);
+app.use("/articles", articlesRoutes);
 
 module.exports = app;
