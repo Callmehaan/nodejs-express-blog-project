@@ -18,9 +18,9 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static(path.resolve(__dirname, "public")));
 
-// app.use(localStrartegy);
+passport.use(localStrartegy);
 
-app.use("/captcha", captchaController.get);
+// app.use("/captcha", captchaController.get);
 app.use("/auth", authRoutes);
 app.use("/articles", articlesRoutes);
 
