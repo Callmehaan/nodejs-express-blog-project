@@ -12,6 +12,7 @@ const articlesRoutes = require("./routes/articles");
 const app = express();
 
 app.set("view engine", "ejs");
+app.set("views", path.join(__dirname, "views"));
 
 app.use(cors());
 app.use(express.json());
@@ -20,7 +21,11 @@ app.use(express.static(path.resolve(__dirname, "public")));
 
 passport.use(localStrartegy);
 
-// app.use("/captcha", captchaController.get);
+app.get("/", (req, res, next) => {
+    return res.render("login.ejs");
+});
+
+app.use("/captcha", captchaController.get);
 app.use("/auth", authRoutes);
 app.use("/articles", articlesRoutes);
 
