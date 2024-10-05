@@ -8,6 +8,7 @@ const localStrartegy = require("./strategies/localStrartegy");
 const captchaController = require("./controllers/captcha");
 const authRoutes = require("./routes/auth");
 const articlesRoutes = require("./routes/articles");
+const jwtAccessTokenStrategy = require("./strategies/jwtAccessTokenStrategy");
 
 const app = express();
 
@@ -20,6 +21,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.static(path.resolve(__dirname, "public")));
 
 passport.use(localStrartegy);
+passport.use("accessToken", jwtAccessTokenStrategy);
 
 app.get("/", (req, res, next) => {
     return res.render("login.ejs");
