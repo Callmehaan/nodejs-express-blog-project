@@ -14,7 +14,7 @@ const Tag = (sequelize) =>
                 type: DataTypes.STRING,
                 allowNull: false,
             },
-            createdAt: {
+            created_at: {
                 type: DataTypes.DATE,
                 defaultValue: DataTypes.NOW,
             },
