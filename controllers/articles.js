@@ -76,3 +76,20 @@ exports.findBySlug = async (req, res, next) => {
 
     return res.json({ ...article.dataValues, tags });
 };
+
+exports.deleteArticle = async (req, res, next) => {
+    const { id } = req.params;
+
+    const article = await Article.findByPk(id, {
+        raw: true,
+    });
+
+    if (!article) return res.status(404).json({ message: "Article not found" });
+
+    if (article.author_id !== req.user.id)
+        return res.status(403).json({ message: "Forbidden" });
+
+    await Article.destroy({ where: { id } });
+
+    return res.status(200).json({ message: "Article removed successfully" });
+};
