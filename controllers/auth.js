@@ -78,3 +78,9 @@ exports.login = async (req, res, next) => {
 
     return res.status(200).json({ accessToken, refreshToken });
 };
+
+exports.getMe = async (req, res, next) => {
+    const user = req.user;
+
+    return res.status(200).json(user);
+};
