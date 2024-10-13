@@ -93,3 +93,27 @@ exports.deleteArticle = async (req, res, next) => {
 
     return res.status(200).json({ message: "Article removed successfully" });
 };
+
+exports.findAll = async (req, res, next) => {
+    const articles = await Article.findAll({
+        include: [
+            {
+                model: Tag,
+                attributes: ["title"],
+                through: {
+                    attributes: [],
+                },
+            },
+            {
+                model: User,
+                attributes: {
+                    exclude: ["password", "role"],
+                },
+                as: "author",
+            },
+        ],
+        order: [["created_at", "DESC"]],
+    });
+
+    return res.json(articles);
+};

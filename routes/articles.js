@@ -45,7 +45,8 @@ router
         uploader.single("cover"),
         validate(createArticleSchema),
         controller.create
-    );
+    )
+    .get(controller.findAll);
 
 router.route("/:slug").get(controller.findBySlug);
 
