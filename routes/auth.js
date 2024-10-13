@@ -26,4 +26,11 @@ router
         controller.getMe
     );
 
+router
+    .route("/logout")
+    .post(
+        passport.authenticate("accessToken", { session: false }),
+        controller.logout
+    );
+
 module.exports = router;
