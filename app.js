@@ -9,6 +9,7 @@ const captchaController = require("./controllers/captcha");
 const authRoutes = require("./routes/auth");
 const articlesRoutes = require("./routes/articles");
 const jwtAccessTokenStrategy = require("./strategies/jwtAccessTokenStrategy");
+const googleStrategy = require("./strategies/googleStrategy");
 
 const app = express();
 
@@ -22,6 +23,7 @@ app.use(express.static(path.resolve(__dirname, "public")));
 
 passport.use(localStrartegy);
 passport.use("accessToken", jwtAccessTokenStrategy);
+passport.use(googleStrategy);
 
 app.get("/", (req, res, next) => {
     return res.render("login.ejs");
