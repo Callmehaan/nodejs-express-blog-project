@@ -34,6 +34,13 @@ router
     );
 
 router
+    .route("/refresh")
+    .post(
+        passport.authenticate("refreshToken", { session: false }),
+        controller.refreshToken
+    );
+
+router
     .route("/google")
     .get(passport.authenticate("google", { scope: ["profile", "email"] }));
 

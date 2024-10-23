@@ -48,7 +48,7 @@ exports.register = async (req, res, next) => {
     }
 };
 
-exports.login = async (req, res, next) => {
+exports.login = async (req, res) => {
     const user = req.user;
 
     const accessToken = jwt.sign(
@@ -79,10 +79,22 @@ exports.login = async (req, res, next) => {
     return res.status(200).json({ accessToken, refreshToken });
 };
 
-exports.getMe = async (req, res, next) => {
+exports.getMe = async (req, res) => {
     const user = req.user;
 
     return res.status(200).json(user);
+};
+
+exports.refreshToken = async (req, res) => {
+    const user = req.user;
+
+    const accessToken = jwt.sign(
+        { id: user.id, role: user.role },
+        configs.auth.accessTokenSecretKey,
+        { expiresIn: configs.auth.accessTokenExpiresInSeconds + "s" }
+    );
+
+    return res.json({ accessToken });
 };
 
 exports.logout = async (req, res, next) => {
