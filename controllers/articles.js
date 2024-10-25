@@ -30,7 +30,7 @@ exports.create = async (req, res, next) => {
                 cover: coverPath,
             });
 
-            await article.addTag(tags.map((tag) => tag[0]));
+            await article.addTags(tags.map((tag) => tag[0]));
 
             return res.status(201).json({
                 ...article.dataValues,
@@ -116,4 +116,81 @@ exports.findAll = async (req, res, next) => {
     });
 
     return res.json(articles);
+};
+
+exports.update = async (req, res, next) => {
+    try {
+        const id = req.params.id;
+
+        let article = await Article.findByPk(id, {
+            include: {
+                model: Tag,
+                through: {
+                    attributes: [],
+                },
+            },
+        });
+
+        if (!article)
+            return res.status(404).json({ message: "Article not found" });
+
+        if (article.author_id !== req.user.id)
+            return res.status(403).json({ message: "Forbidden" });
+
+        let { title, content, tags } = req.body;
+        let slug = slugify(title, { lower: true });
+        const copyOfSlug = slug;
+        const authorId = req.user.id;
+
+        tags = Array.isArray(tags) ? tags : [tags];
+        tags = tags.map((tag) => {
+            return Tag.findOrCreate({
+                where: { title: tag.trim() },
+            });
+        });
+        tags = await Promise.all(tags);
+
+        const coverPath = `/images/covers/${req.file?.filename}`;
+
+        let updatedArticle;
+        let i = 1;
+        while (!updatedArticle) {
+            try {
+                updatedArticle = await Article.update(
+                    {
+                        title,
+                        content,
+                        slug,
+                        author_id: authorId,
+                        cover: coverPath,
+                    },
+                    {
+                        where: { id },
+                    }
+                );
+            } catch (err) {
+                if (err.original.code === "ER_DUP_ENTRY") {
+                    slug = `${copyOfSlug}-${i++}`;
+                } else {
+                    throw err;
+                }
+            }
+
+            await article.removeTags(article.tags);
+            await article.addTags(tags.map((tag) => tag[0]));
+
+            article = await Article.findByPk(id, {
+                attributes: {
+                    exclude: ["author_id"],
+                },
+            });
+
+            return res.status(200).json({
+                ...article.dataValues,
+                tags: tags.map((tag) => tag[0].title),
+            });
+        }
+    } catch (err) {
+        next(err);
+    }
 };

@@ -55,6 +55,12 @@ router
     .delete(
         passport.authenticate("accessToken", { session: false }),
         controller.deleteArticle
+    )
+    .put(
+        passport.authenticate("accessToken", { session: false }),
+        uploader.single("cover"),
+        validate(createArticleSchema),
+        controller.update
     );
 
 module.exports = router;
